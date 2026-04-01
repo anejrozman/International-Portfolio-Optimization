@@ -1,0 +1,27 @@
+# Python defaults
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+env/
+venv/
+.env
+.venv/
+pip-log.txt
+.pytest_cache/
+.coverage
+htmlcov/
+dist/
+build/
+*.egg-info/
+
+# macOS
+.DS_Store
+
+# User specified ignores
+patrick_code/
+
+# Ignore all contents in data folder but keep the directory tracked
+data/*
+!data/.gitkeep
