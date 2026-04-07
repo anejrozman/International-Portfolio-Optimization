@@ -1,6 +1,6 @@
 """
 
-Description: Script to format raw equity and currency spot data files from Datastream
+Description: Script to format raw equity and currency spot data files from Refinitiv Datastream
 
 Author: Anej Rozman 
 Last edited: 2026-03-16
