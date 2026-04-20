@@ -1,0 +1,9 @@
+%% This file is `UZHlogo.sty`
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{UZHlogo}[2025/10/21 0.1 UZH Logo command]
+\RequirePackage{graphicx}
+% Usage: \UZHlogo or \UZHlogo[<width>] (default: \textwidth)
+\newcommand{\UZHlogo}[1][\textwidth]{\resizebox{#1}{!}{\includegraphics{UZHlogo}}}
+\endinput
+%%
+%% End of file `UZHlogo.sty`

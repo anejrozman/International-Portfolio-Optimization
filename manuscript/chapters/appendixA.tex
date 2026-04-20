@@ -1,0 +1,74 @@
+\chapter{ES Optimization Equivalence} \label{app:es_derivation}
+
+We derive the equivalence between the direct minimization of Expected Shortfall and the auxiliary formulation proposed by Rockafellar and Uryasev (2000) that allows for formulating the optimization as a linear program.
+
+We assume that the loss distribution is continuous, meaning the loss cumulative distribution function has no jumps and the probability density function $f(l)$ exists. Under these assumptions, Value-at-Risk (VaR) is uniquely defined.
+
+Define the loss random variable at time $t+1$ given portfolio weights $x_t$ as $L(x_t) = -x_t^T R_{t+1}$. Let $f(l)$ denote the probability density function of the loss $L(x_t)$.\ The VaR at confidence level $\beta$ is defined as the $\beta$-quantile of the loss distribution
+\begin{equation*}
+    \text{VaR}_\beta(x_t) = \min \{ \alpha : \mathbb{P}(L(x_t) \le \alpha) \ge \beta \}.
+\end{equation*}
+
+The Expected Shortfall is defined as the conditional expectation of losses exceeding VaR
+\begin{equation*}
+    \text{ES}_\beta(x_t) = \mathbb{E}[L(x_t) \mid L(x_t) \ge \text{VaR}_\beta(x_t)] = \frac{1}{1-\beta} \int_{\text{VaR}_\beta(x_t)}^\infty l f(l) \, dl.
+\end{equation*}
+
+We now consider the auxiliary function $F_\beta$ defined as
+\begin{equation*}
+    F_\beta(x_t, \alpha) = \alpha + \frac{1}{1-\beta} \mathbb{E}_t[(L(x_t) - \alpha)^+].
+\end{equation*}
+
+
+We can rewrite the expectation term using the integral form
+\begin{equation*}
+    \mathbb{E}_t[(L(x_t) - \alpha)^+] = \int_{-\infty}^\infty (l - \alpha)^+ f(l) \, dl = \int_{\alpha}^\infty (l - \alpha) f(l) \, dl.
+\end{equation*}
+
+Before minimizing $F_\beta(x_t, \alpha)$ with respect to $\alpha$, we verify convexity. The second derivative of $F_\beta$ with respect to $\alpha$ is
+\begin{align*}
+    \frac{\partial F_\beta}{\partial \alpha} &= 1 - \frac{1}{1-\beta} \int_{\alpha}^\infty f(l) \, dl \\
+    \frac{\partial^2 F_\beta}{\partial \alpha^2} &= \frac{1}{1-\beta} f(\alpha).
+\end{align*}
+Since the probability density function $f(\alpha) \ge 0$ and $\beta < 1$, the second derivative is non-negative, $\frac{\partial^2 F_\beta}{\partial \alpha^2} \ge 0$. Thus, $F_\beta(x_t, \alpha)$ is convex in $\alpha$, ensuring that the first-order condition is necessary and sufficient for a global minimum.
+
+Differentiation of $F_\beta(x_t, \alpha)$ with respect to $\alpha$ yields the first-order condition for optimality. Using Leibniz's rule we have
+\begin{align*}
+    \frac{\partial F_\beta}{\partial \alpha} 
+    &= 1 + \frac{1}{1-\beta} \frac{\partial}{\partial \alpha} \int_\alpha^\infty (l - \alpha) f(l) \, dl \\
+    &= 1 + \frac{1}{1-\beta} \left[ -f(\alpha) \cdot 0 + \int_\alpha^\infty (-1) f(l) \, dl \right] \\
+    &= 1 - \frac{1}{1-\beta} \int_\alpha^\infty f(l) \, dl \\
+    &= 1 - \frac{1}{1-\beta} \mathbb{P}(L(x_t) \ge \alpha).
+\end{align*}
+
+Setting the derivative to zero to find the optimal $\alpha^*$
+\begin{align*}
+    1 - \frac{1}{1-\beta} \mathbb{P}(L(x_t) \ge \alpha^*) &= 0 \\
+    \mathbb{P}(L(x_t) \ge \alpha^*) &= 1 - \beta \\
+    \mathbb{P}(L(x_t) \le \alpha^*) &= \beta.
+\end{align*}
+
+This implies that the optimal $\alpha^*$ that minimizes the auxiliary function for a fixed $x_t$ is exactly the Value-at-Risk at level $\beta$, so $\alpha^* = \text{VaR}_\beta(x_t)$.
+
+Substituting $\alpha^* = \text{VaR}_\beta(x_t)$ back into $F_\beta(x_t, \alpha)$ we obtain
+\begin{align*}
+    F_\beta(x_t, \text{VaR}_\beta(x_t)) &= \text{VaR}_\beta(x_t) + \frac{1}{1-\beta} \int_{\text{VaR}_\beta(x_t)}^\infty (l - \text{VaR}_\beta(x_t)) f(l) \, dl \\
+    &= \text{VaR}_\beta(x_t) + \frac{1}{1-\beta} \left( \int_{\text{VaR}_\beta(x_t)}^\infty l f(l) \, dl - \text{VaR}_\beta(x_t) \int_{\text{VaR}_\beta(x_t)}^\infty f(l) \, dl \right).
+\end{align*}
+
+Recognizing that $\int_{\text{VaR}_\beta(x_t)}^\infty f(l) \, dl = \mathbb{P}(L(x_t) \ge \text{VaR}_\beta(x_t)) = 1-\beta$, we have
+\begin{align*}
+    F_\beta(x_t, \text{VaR}_\beta(x_t)) &= \text{VaR}_\beta(x_t) + \frac{1}{1-\beta} \int_{\text{VaR}_\beta(x_t)}^\infty l f(l) \, dl - \frac{1}{1-\beta} \text{VaR}_\beta(x_t) (1-\beta) \\
+    &= \text{VaR}_\beta(x_t) + \text{ES}_\beta(x_t) - \text{VaR}_\beta(x_t) \\
+    &= \text{ES}_\beta(x_t).
+\end{align*}
+
+Thus, minimizing $\text{ES}_\beta(x_t)$ with respect to $x_t$ is equivalent to minimizing $F_\beta(x_t, \alpha)$ jointly with respect to $x_t$ and $\alpha$
+\begin{equation*} \label{eq:joint_opt}
+    \min_{x_t} \text{ES}_\beta(x_t) = \min_{x_t, \alpha} \left( \alpha + \frac{1}{1-\beta} \mathbb{E}_t[(-x_t^T R_{t+1} - \alpha)^+] \right).
+\end{equation*}
+
+Finally, we observe that $F_\beta(x_t, \alpha)$ is jointly convex in $(x_t, \alpha)$. The term $\alpha$ is linear (hence convex). The inner map $(x_t, \alpha) \mapsto (-x_t^\top R_{t+1} - \alpha)$ is affine. The outer function $z \mapsto z^+$ is convex and nondecreasing. The composition of a convex nondecreasing function with an affine map is convex. Thus $(-x_t^\top R_{t+1} - \alpha)^+$ is jointly convex in $(x_t, \alpha)$. Taking the expectation preserves convexity.
+
+
+Since the objective function is convex, any local minimum is global, ensuring that optimization algorithms will converge efficiently to the optimal solution.

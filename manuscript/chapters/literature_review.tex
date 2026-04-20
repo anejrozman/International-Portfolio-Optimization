@@ -1,0 +1,24 @@
+\chapter{Literature Review}
+
+In this chapter, we review the relevant literature on multi-currency 
+portfolio optimization. We discuss the contributions and 
+methodologies in the field, highlighting how our work builds 
+upon and extends existing research. 
+
+The core of our analysis builds on two recent studies that 
+apply regularization techniques to international asset allocation. 
+Burkhardt and Ulrych (2023) introduce a joint optimization approach 
+within a mean-variance framework. By using L1 and L2 regularization, they show that jointly optimizing assets and 
+currencies leads to better out-of-sample performance than the standard 
+industry practice of using a separate currency overlay. 
+
+Extending this framework, Lucescu and Ulrych (2026) consider an 
+Expected Shortfall optimization framework to better manage downside 
+tail risk. To fix the numerical instability common in Expected Shortfall minimization, 
+they apply similar regularization methods. Their findings reveal a 
+dimensional trade-off. Joint optimization works best in small asset universes, 
+but the separate currency overlay approach becomes more effective for larger 
+universes due to its built-in dimensionality reduction. 
+
+Reproducing and comparing these two baseline frameworks serves as the starting point 
+for the extensions proposed in this thesis.

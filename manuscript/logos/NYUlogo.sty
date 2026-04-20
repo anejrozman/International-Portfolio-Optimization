@@ -1,0 +1,9 @@
+%% This file is `NYUlogo.sty`
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{NYUlogo}[2025/10/21 0.1 NYU Logo command]
+\RequirePackage{graphicx}
+% Usage: \NYUlogo or \NYUlogo[<width>] (default: \textwidth)
+\newcommand{\NYUlogo}[1][\textwidth]{\resizebox{#1}{!}{\includegraphics{NYUlogo}}}
+\endinput
+%%
+%% End of file `NYUlogo.sty`
