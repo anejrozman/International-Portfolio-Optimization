@@ -1,4 +1,4 @@
-# International Portfolio Optimization Under General Risk Measures
+# Multi-Currency Portfolio Optimization with General Risk Measures
 
 <!--
 INSTRUCTIONS FOR WRITING A CLEAR README:
@@ -16,32 +16,34 @@ The repository contains the codebase for my MSc Thesis in the program Quantitati
 
 ## Repository Structure
 
-- `data/`: Not present in the repository due to licensing constraints, but this is where all datasets are organized.
-  - `raw/`: Unaltered downloaded data from Refinitiv Datastream..
-  - `interim/`: Intermediate data that has been transformed by the data_pipeline
+- `administrative/`: Documents related to the thesis proposal and registration.
+- `code/`: Contains all the Python codebase for the thesis.
+  - `scripts/`: Executable scripts to run specific experiments and tests (e.g., `base_script.py` for running the main optimization script, `return_statistics.py` for computing return statistics).
+  - `src/`: Core source code modules.
+    - `backtest/`: The core `Backtester` engine designed for the `BaseOptimizer` class.
+    - `data_pipeline/`: Scripts to clean, format, and preprocess raw data.
+    - `evaluation/`: Scripts for evaluating backtest performance and computing metrics.
+    - `optimizers/`: Implementations of various portfolio optimizers (e.g., `JointMeanVarianceOptimizer`, `EqualWeightOptimizer`) following the `BaseOptimizer` class structure.
+- `data/`: Datasets used in the project (see `data/README_DATA.md` for details). Some data may be absent from the repository due to licensing constraints.
+  - `raw/`: Unaltered downloaded data from Refinitiv Datastream and Jupyter notebooks for downloading data.
+  - `interim/`: Intermediate data that has been transformed by the data pipeline.
   - `processed/`: Final datasets for modeling and backtesting.
-- `src/`: Core source code modules.
-  - `data_pipeline/`: Scripts to clean, format, and preprocess raw data.
-  - `optimizers/`: Implementations of various portfolio optimizers inherited from `BaseOptimizer` (e.g., `JointMeanVarianceOptimizer`, `EqualWeightOptimizer`).
-  - `backtest/`: The core `Backtester` engine designed for the `BaseOptimizer` class.
-  - `evaluation/`: Scripts for evaluating backtest performance and computing metrics.
-- `scripts/`: Executable scripts to run specific experiments and tests.
+- `manuscript/`: LaTeX source files for the thesis document, including chapters, bibliography, and compiled PDFs.
 - `plots/`: Output directory for generated visualizations.
 
 ## Installation & Setup
-TODO 
 
 ```bash
 # 1. Clone the repository
-git clone TODO
-cd thesis_codebase
+git clone <repository_url>
+cd master_thesis
 
 # 2. Set up a virtual environment
 python -m venv venv
 source venv/bin/activate  # On Windows use: venv\Scripts\activate
 
 # 3. Install dependencies
-# Make sure to generate a requirements.txt: `pip freeze > requirements.txt`
+# TODO Make sure to generate a requirements.txt: `pip freeze > requirements.txt`
 pip install -r requirements.txt
 ```
 
@@ -54,14 +56,14 @@ Due to licensing constraints, the raw data used for this project cannot be distr
 ### 1. Data Processing
 To generate the processed datasets used in the analysis from the raw inputs run the following scripts in order. 
 ```bash
-python src/data_pipeline/format_raw_data.py
-python src/data_pipeline/preprocess_data.py
+python code/src/data_pipeline/format_raw_data.py
+python code/src/data_pipeline/preprocess_data.py
 ```
 
 ### 2. Running Optimizations & Backtests
 An example of how to execute the main backtesting scripts to obtain the return series of the optimized portfolios.
 ```bash
-python scripts/base_script.py
+python code/scripts/base_script.py
 ```
 
 ## Results & Evaluation
