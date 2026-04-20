@@ -11,21 +11,23 @@
 \contentsline {paragraph}{Defining the “bad” events.}{9}{section*.20}%
 \contentsline {paragraph}{Probability of each bad event.}{10}{section*.21}%
 \contentsline {paragraph}{Conclusion.}{10}{section*.22}%
-\contentsline {chapter}{\chapternumberline {5}Conclusion}{12}{chapter.5}%
-\contentsline {paragraph}{Summary of Contributions.}{12}{section*.25}%
-\contentsline {paragraph}{Limitations and Possible Extensions.}{12}{section*.26}%
-\contentsline {chapter}{\chapternumberline {6}Model-free multi-currency portfolio returns}{14}{chapter.6}%
-\contentsline {section}{\numberline {6.1}Unhedged Portfolio Returns}{14}{section.6.1}%
-\contentsline {section}{\numberline {6.2}Hedged Portfolio Returns}{15}{section.6.2}%
-\contentsline {section}{\numberline {6.3}Matrix Representation and Decomposition}{15}{section.6.3}%
-\contentsline {chapter}{Bibliography}{17}{chapter*.27}%
-\contentsline {chapter}{Appendices}{18}{section*.28}%
-\contentsline {chapter}{ES Optimization Equivalence}{19}{appendix*.29}%
-\contentsline {chapter}{ES Optimization Implementation}{21}{appendix*.30}%
-\contentsline {section}{Sample-Based Expected Shortfall}{21}{section*.31}%
-\contentsline {section}{Linearization of the $L_1$ Penalty and Leverage}{22}{section*.32}%
-\contentsline {section}{Quadratic Translation of the $L_2$ Penalty}{22}{section*.33}%
-\contentsline {section}{Separate Optimization (Currency Overlay)}{22}{section*.34}%
-\contentsline {subsection}{Step 1: Asset-Level Optimization}{22}{section*.35}%
-\contentsline {subsection}{Step 2: Currency-Level Optimization}{23}{section*.36}%
-\contentsline {section}{Joint Optimization Framework}{23}{section*.37}%
+\contentsline {chapter}{\chapternumberline {5}Model-free multi-currency portfolio returns}{12}{chapter.5}%
+\contentsline {section}{\numberline {5.1}Unhedged Portfolio Returns}{12}{section.5.1}%
+\contentsline {section}{\numberline {5.2}Hedged Portfolio Returns}{13}{section.5.2}%
+\contentsline {section}{\numberline {5.3}Matrix Representation and Decomposition}{13}{section.5.3}%
+\contentsline {chapter}{\chapternumberline {6}Empirical Analysis}{15}{chapter.6}%
+\contentsline {section}{\numberline {6.1}Data}{15}{section.6.1}%
+\contentsline {section}{\numberline {6.2}Results: Small Investment Universe}{15}{section.6.2}%
+\contentsline {section}{\numberline {6.3}Results: Large Investment Universe}{15}{section.6.3}%
+\contentsline {chapter}{\chapternumberline {7}Conclusion}{16}{chapter.7}%
+\contentsline {chapter}{Bibliography}{17}{chapter*.25}%
+\contentsline {chapter}{Appendices}{18}{section*.26}%
+\contentsline {chapter}{ES Optimization Equivalence}{19}{appendix*.27}%
+\contentsline {chapter}{ES Optimization Implementation}{21}{appendix*.28}%
+\contentsline {section}{Sample-Based Expected Shortfall}{21}{section*.29}%
+\contentsline {section}{Linearization of the $L_1$ Penalty and Leverage}{22}{section*.30}%
+\contentsline {section}{Quadratic Translation of the $L_2$ Penalty}{22}{section*.31}%
+\contentsline {section}{Separate Optimization (Currency Overlay)}{22}{section*.32}%
+\contentsline {subsection}{Step 1: Asset-Level Optimization}{22}{section*.33}%
+\contentsline {subsection}{Step 2: Currency-Level Optimization}{23}{section*.34}%
+\contentsline {section}{Joint Optimization Framework}{23}{section*.35}%
