@@ -25,6 +25,10 @@ patrick_code/
 # Ignore all contents in data folder but keep the directory tracked
 data/*
 !data/.gitkeep
+
 thesis_proposal/
 literature/
 administrative/
+code/scripts/compare_table1.py
+
+CLAUDE.md
