@@ -20,14 +20,15 @@
 \contentsline {section}{\numberline {6.2}Results: Small Investment Universe}{15}{section.6.2}%
 \contentsline {section}{\numberline {6.3}Results: Large Investment Universe}{15}{section.6.3}%
 \contentsline {chapter}{\chapternumberline {7}Conclusion}{16}{chapter.7}%
-\contentsline {chapter}{Bibliography}{17}{chapter*.25}%
-\contentsline {chapter}{Appendices}{18}{section*.26}%
-\contentsline {chapter}{ES Optimization Equivalence}{19}{appendix*.27}%
-\contentsline {chapter}{ES Optimization Implementation}{21}{appendix*.28}%
-\contentsline {section}{Sample-Based Expected Shortfall}{21}{section*.29}%
-\contentsline {section}{Linearization of the $L_1$ Penalty and Leverage}{22}{section*.30}%
-\contentsline {section}{Quadratic Translation of the $L_2$ Penalty}{22}{section*.31}%
-\contentsline {section}{Separate Optimization (Currency Overlay)}{22}{section*.32}%
-\contentsline {subsection}{Step 1: Asset-Level Optimization}{22}{section*.33}%
-\contentsline {subsection}{Step 2: Currency-Level Optimization}{23}{section*.34}%
-\contentsline {section}{Joint Optimization Framework}{23}{section*.35}%
+\contentsline {chapter}{Appendices}{17}{section*.25}%
+\contentsline {appendix}{\chapternumberline {A}ES Optimization Equivalence}{18}{appendix.A}%
+\contentsline {appendix}{\chapternumberline {B}ES Optimization Implementation}{20}{appendix.B}%
+\contentsline {section}{\numberline {B.1}Sample-Based Expected Shortfall}{20}{section.B.1}%
+\contentsline {section}{\numberline {B.2}Linearization of the $L_1$ Penalty and Leverage}{21}{section.B.2}%
+\contentsline {section}{\numberline {B.3}Quadratic Translation of the $L_2$ Penalty}{21}{section.B.3}%
+\contentsline {section}{\numberline {B.4}Separate Optimization (Currency Overlay)}{21}{section.B.4}%
+\contentsline {subsection}{\numberline {B.4.1}Step 1: Asset-Level Optimization}{21}{subsection.B.4.1}%
+\contentsline {subsection}{\numberline {B.4.2}Step 2: Currency-Level Optimization}{22}{subsection.B.4.2}%
+\contentsline {section}{\numberline {B.5}Joint Optimization Framework}{22}{section.B.5}%
+\contentsline {appendix}{\chapternumberline {C}Transaction Costs}{23}{appendix.C}%
+\contentsline {chapter}{Bibliography}{25}{appendix*.27}%

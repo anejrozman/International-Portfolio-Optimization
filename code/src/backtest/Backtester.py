@@ -11,6 +11,7 @@ Last edited: -
 import pandas as pd
 import os
 import sys
+import math
 from itertools import product
 from typing import Type, Optional
 
@@ -22,16 +23,16 @@ class Backtester:
 
     def __init__(self, 
                  optimizer: Type[BaseOptimizer], 
-                 param_grid: Optional[dict] = None, 
-                 window_years: int = 10, 
-                 val_years: int = 1, 
-                 rebalancing_frequency: str = "quarterly" # Options: daily, weekly, monthly, quarterly, semi-annually, annually
+                 param_grid: Optional[dict] = None,         # Grid of hyperparameters to search over during model selection. Depends on optimizer type. 
+                 window_years: int = 10,                    # Total length of rolling lookcback window used for model estimaton, validation and selection at each rebalancing date.
+                 val_years: int = 1,                        # Length of validation window used for model selection at each rebalancing date. Must be less than window_years.
+                 rebalancing_frequency: str = "quarterly"   # Options: daily, weekly, monthly, quarterly, semi-annually, annually
                  ):
 
             self.optimizer = optimizer
             self.param_grid = param_grid if param_grid else {}
             self.window_years = window_years
-            self.val_years = val_years
+            self.val_years = val_years 
             self.rebalancing_frequency = rebalancing_frequency
     
     def _get_rebalance_dates(self, dates: pd.DatetimeIndex) -> list[pd.Timestamp]:
@@ -78,9 +79,9 @@ class Backtester:
         return rebalance_dates
     
     def _get_estimation_and_validation_splits(self, 
-                                              dates: pd.DatetimeIndex, 
-                                              rebalancing_date: pd.Timestamp, 
-                                              next_rebalancing_date: pd.Timestamp
+                                              dates: pd.DatetimeIndex,              # Full index of trading dates.
+                                              rebalancing_date: pd.Timestamp,       # Current rebalancing date for which we want to compute the splits.
+                                              next_rebalancing_date: pd.Timestamp   # Next rebalancing date, needed to compute the holding period end boundary with execution lag.
                                               ) -> dict[str, pd.Timestamp]:
         """
         Compute period boundaries for one rebalancing cycle.
@@ -91,8 +92,6 @@ class Backtester:
         - full_estimation_start, full_estimation_end
         - holding_start, holding_end
         """
-        if dates is None or len(dates) == 0:
-            raise ValueError("'dates' must be a non-empty DatetimeIndex.")
 
         trading_dates = pd.DatetimeIndex(dates).sort_values().unique()
         t = pd.Timestamp(rebalancing_date)
@@ -191,7 +190,81 @@ class Backtester:
              return [{}]
         keys, values = zip(*self.param_grid.items())
         return [dict(zip(keys, v)) for v in product(*values)]
+
+    def _compute_drifted_weights(self, initial_weights: pd.Series, returns_slice: pd.DataFrame) -> pd.DataFrame:
+        """
+        Given the target weights at the start of the holding period, 
+        compound them daily using the asset returns to find the drifted 
+        weights at the end of the period.
+            
+        Returns:
+            pd.DataFrame: A dataframe of the same shape as returns_slice containing the daily drifted weights.
+        """
+        
+        shifted_returns = returns_slice.shift(1).fillna(0)
+        cumulative_growth = (1 + shifted_returns).cumprod()
+        unnormalized_weights = cumulative_growth * initial_weights
+        drifted_weights = unnormalized_weights.div(unnormalized_weights.sum(axis=1), axis=0)
+
+        return drifted_weights
     
+    def _compute_asset_transaction_costs(self, 
+                                         drifted_weights: pd.Series, 
+                                         new_weights: pd.Series, 
+                                         asset_cost_bps: float = 10.0   # Default to 10 bps per unit traded, assumption in Appendix C of the thesis.
+                                         ) -> float:
+        """
+        Calculate the transaction costs incurred from rebalancing individual asset holdings.
+        """
+        chi = asset_cost_bps / 10000.0
+        tau = math.log((1 + chi) / (1 - chi))
+        trade_volume = (new_weights - drifted_weights).abs()
+        
+        return float((tau * trade_volume).sum())
+
+    def _compute_currency_transaction_costs(self,
+                                            drifted_forward_weights: pd.Series,
+                                            new_forward_weights: pd.Series,
+                                            drifted_currency_weights: pd.Series,
+                                            new_currency_weights: pd.Series,
+                                            full_forward_turnover: bool,
+                                            base_currency: str = "USD",
+                                            fx_cost_bps: float = 1.0        # Default to 1 bp per unit traded, assumption in Appendix C of the thesis.
+                                            ) -> float:
+        """
+        Calculate the transaction costs incurred from currency spot conversions and forward hedges.
+        """
+
+        chi = fx_cost_bps / 10000.0
+        tau = math.log((1 + chi) / (1 - chi))
+        
+        # Helper to zero out the base currency costs
+        def _exclude_base(s: pd.Series) -> pd.Series:
+            s_out = s.copy()
+            if base_currency in s_out.index:
+                s_out[base_currency] = 0.0
+            return s_out
+
+        new_fwds = _exclude_base(new_forward_weights)
+        drifted_fwds = _exclude_base(drifted_forward_weights)
+        new_spot = _exclude_base(new_currency_weights)
+        drifted_spot = _exclude_base(drifted_currency_weights)
+        
+        if full_forward_turnover:
+            # Old contracts expire, new contracts are fully traded
+            fwd_volume = new_fwds.abs()
+        else:
+            # Contracts are kept open, only incremental adjustments are traded
+            fwd_volume = (new_fwds - drifted_fwds).abs()
+            
+        fwd_costs = (tau * fwd_volume).sum()
+        
+        # Exchanges required to fund purchases of assets denominated in different currencies
+        spot_volume = (new_spot - drifted_spot).abs()
+        spot_costs = (tau * spot_volume).sum()
+        
+        return float(fwd_costs + spot_costs)
+
     def run(self, data_bundle: dict) -> pd.DataFrame:
         return pd.DataFrame()
     

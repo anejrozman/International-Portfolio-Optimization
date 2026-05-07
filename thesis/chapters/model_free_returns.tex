@@ -51,13 +51,14 @@ For each foreign currency $c\in\mathcal{C}$, assume that at time $t$ the investo
 f_{c,t} \coloneqq \frac{F_{c,t}-S_{c,t}}{S_{c,t}}.
 \end{equation*}
 Let $\bm{\tau}_t\in\R^M$ denote forward positions expressed as fractions of total portfolio value, where $\tau_{c,t}$ represents the relative notional of the \emph{short} forward in currency $c$ at time $t$. With this sign convention, $\tau_{c,t}>0$ represents hedging (shorting foreign currency forward). The \emph{hedged} portfolio return is
-\begin{equation*}
+\begin{equation}
 R^{h}_{P,t+1}
 =
 \sum_{i=1}^N x_{i,t}\,R^{u}_{i,t+1}
 +
-\sum_{c=1}^M \tau_{c,t}\,(f_{c,t}-e_{c,t+1}).
-\end{equation*}
+\sum_{c=1}^M \phi_{c,t}\,(f_{c,t}-e_{c,t+1}).
+\label{eq:hedged-portfolio-return}
+\end{equation}
 This representation is model-free: it holds pathwise for realized returns and does not assume any distributional structure.
 
 \section{Matrix Representation and Decomposition}

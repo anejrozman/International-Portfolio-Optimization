@@ -6,4 +6,9 @@ Manuel Blum, Robert~W Floyd, Vaughan~R Pratt, Ronald~L Rivest, and Robert~E
 \newblock Time bounds for selection.
 \newblock {\em Journal of Computer and System Sciences}, 7(4):448--461, 1973.
 
+\bibitem{SparseAndStableInternationalPortfolioOptimization}
+Raphael~Burkhardt Urban~Ulrych.
+\newblock Sparse and stable international portfolio optimization and currency
+  risk management, 2023.
+
 \end{thebibliography}
