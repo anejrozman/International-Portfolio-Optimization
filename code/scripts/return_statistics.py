@@ -59,11 +59,7 @@ def main():
     # Daily Fully Hedged Asset Returns
     # ---------------------------------------------
 
-    # Statistics are computed over each stock's full data history (no rebalancing mask),
-    # matching the paper's description of "1,705 individual stocks from June 1990 to June 2023".
-    # Observations with |return| > 2.0 are dropped as spurious data errors
-    # (unadjusted corporate actions such as reverse splits produce single-day
-    # returns of 100x–250x that would otherwise dominate the statistics).
+    # Statistics are computed over each stock's full data history
     RETURN_FILTER = 2.0
     universe_rics = set(asset_to_currency.keys())
     fully_hedged_returns = {}
@@ -112,10 +108,10 @@ def main():
         'Currency_Excess_Volatility': currency_ann_vol
     })
     
-    # USD is the base currency
+    # USD is the base currency so we set its excess return and volatility to 0
     currency_stats.loc['USD'] = {'Currency_Excess_Return': 0.0, 'Currency_Excess_Volatility': 0.0}
     
-    # Summary Table
+    # Summary Table Print
     summary_table = economy_asset_stats.join(currency_stats)
     order = ['AUD', 'CAD', 'DKK', 'EUR', 'HKD', 'JPY', 'NZD', 'NOK', 'SGD', 'ZAR', 'SEK', 'CHF', 'GBP', 'USD']
     summary_table = summary_table.reindex(order)

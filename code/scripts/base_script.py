@@ -1,6 +1,6 @@
 """
 
-Description: Base script for running the UniversalBacktester with an Equal Weight Optimizer. 
+Description: Base script that serves as a template for running the UniversalBacktester with (in this case) an Equal Weight Optimizer. 
 Loads data, sets up the backtester, and plots cumulative returns.
 
 Author: Anej Rozman
