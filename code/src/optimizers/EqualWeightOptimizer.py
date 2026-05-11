@@ -34,7 +34,6 @@ class EqualWeightOptimizer(BaseOptimizer):
             
         weights = np.zeros(self.num_assets)
         valid_count = self.valid_mask.sum()
-        print(f"DEBUG: Allocating 1/N weight to {valid_count} assets.")
 
         if valid_count > 0:
             weights[self.valid_mask] = 1.0 / valid_count
