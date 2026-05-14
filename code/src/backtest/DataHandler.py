@@ -23,7 +23,7 @@ class DataHandler:
         self.excess_currency_returns_file = excess_currency_returns_file
         self.asset_to_currency: dict[str, str] = {}
         
-    def load_and_process(self) -> Tuple[pd.DataFrame, dict, pd.DataFrame]:
+    def load_and_process(self) -> Tuple[pd.DataFrame, dict, pd.DataFrame, pd.DataFrame]:
 
         # ----------------------------------------------------------------------------
         # Investment universe
@@ -61,15 +61,14 @@ class DataHandler:
         # The reindex aligns the mask's dates with the daily trading dates in asset_returns
         daily_mask = mask.reindex(asset_returns.index, method='ffill')
         
-        # Where the mask is 1, the return stays. Where the mask is NaN, the return becomes NaN.
-        final_active_returns = asset_returns * daily_mask
-        
         # ----------------------------------------------------------------------------
         # Excess currency daily returns
         # ----------------------------------------------------------------------------
         excess_currency_returns_df = pd.read_csv(self.excess_currency_returns_file)
         excess_currency_returns_df['date'] = pd.to_datetime(excess_currency_returns_df['date'])
         excess_currency_returns_df.set_index('date', inplace=True)
-        
-        return final_active_returns, self.asset_to_currency, excess_currency_returns_df
+
+        # Return unmasked asset returns alongside the daily mask so the Backtester
+        # can apply point-in-time universe selection at each rebalancing date.
+        return asset_returns, self.asset_to_currency, excess_currency_returns_df, daily_mask
 
